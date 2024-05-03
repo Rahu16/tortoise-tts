@@ -141,11 +141,8 @@ def transliteration_cleaners(text):
 
 def english_cleaners(text):
   '''Pipeline for English text, including number and abbreviation expansion.'''
-  text = convert_to_ascii(text)
-  text = lowercase(text)
-  text = expand_numbers(text)
-  text = expand_abbreviations(text)
-  text = collapse_whitespace(text)
+  text = text.lower()
+  text = re.sub(re.compile(r'\s+'), ' ', text)
   text = text.replace('"', '')
   return text
 
@@ -166,7 +163,7 @@ def lev_distance(s1, s2):
   return distances[-1]
 
 
-DEFAULT_VOCAB_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../data/tokenizer.json')
+DEFAULT_VOCAB_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../data/custom_language_tokenizer.json')
 
 
 class VoiceBpeTokenizer:
